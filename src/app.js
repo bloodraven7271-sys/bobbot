@@ -83,7 +83,38 @@ class TitanBot extends Client {
       startupLog('Logging into Discord...');
       await this.login(this.config.bot.token);
       startupLog('Discord login successful');
-      
+      this.on('messageCreate', async (message) => {
+  if (message.author.bot) return;
+
+  // Bot responds when mentioned
+  if (message.mentions.has(this.user)) {
+    const text = message.content
+      .replace(`<@${this.user.id}>`, '')
+      .replace(`<@!${this.user.id}>`, '')
+      .trim()
+      .toLowerCase();
+
+    if (text === 'hi' || text === 'hello') {
+      return message.reply('Hello!');
+    }
+
+    if (text === 'how are you') {
+      return message.reply('I am doing great!');
+    }
+
+    if (text === 'ping') {
+      return message.reply('Pong!');
+    }
+
+    if (text === 'help') {
+      return message.reply(
+        'Commands: hi, hello, ping, how are you'
+      );
+    }
+
+    return message.reply(`You said: ${text}`);
+  }
+});
       startupLog('Registering slash commands...');
       await this.registerCommands();
       startupLog('Slash commands registration complete');
