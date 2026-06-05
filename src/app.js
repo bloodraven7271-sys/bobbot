@@ -87,6 +87,7 @@ class TitanBot extends Client {
   if (message.author.bot) return;
 
   // Bot responds when mentioned
+        if (message.mentions.has(this.user))
   if (message.mentions.has(this.user)) {
     const text = message.content
       .replace(`<@${this.user.id}>`, '')
