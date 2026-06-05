@@ -20,6 +20,12 @@ export default {
             .setDescription('Your gender')
             .setRequired(true)
         )
+      .addStringOption(option =>
+  option
+    .setName('country')
+    .setDescription('Your country')
+    .setRequired(true)
+)
         .addStringOption(option =>
           option
             .setName('timezone')
