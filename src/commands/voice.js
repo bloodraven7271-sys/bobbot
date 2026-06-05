@@ -4,14 +4,14 @@ import { joinVoiceChannel } from '@discordjs/voice';
 export default {
   data: new SlashCommandBuilder()
     .setName('join')
-    .setDescription('Join your voice channel'),
+    .setDescription('Makes the bot join your voice channel'),
 
   async execute(interaction) {
     const channel = interaction.member.voice.channel;
 
     if (!channel) {
       return interaction.reply({
-        content: 'Join a voice channel first.',
+        content: 'Join a voice channel first!',
         ephemeral: true
       });
     }
@@ -19,9 +19,9 @@ export default {
     joinVoiceChannel({
       channelId: channel.id,
       guildId: channel.guild.id,
-      adapterCreator: channel.guild.voiceAdapterCreator
+      adapterCreator: channel.guild.voiceAdapterCreator,
     });
 
-    await interaction.reply('🎤 Joined your voice channel!');
-  }
+    await interaction.reply('Joined the voice channel!');
+  },
 };
