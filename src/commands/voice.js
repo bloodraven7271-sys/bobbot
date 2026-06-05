@@ -3,7 +3,7 @@ import { joinVoiceChannel } from '@discordjs/voice';
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('join')
+    .setName('/join')
     .setDescription('Makes the bot join your voice channel'),
 
   async execute(interaction) {
