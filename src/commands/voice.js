@@ -1,37 +1,30 @@
-import { SlashCommandBuilder } from 'discord.js';
-import { joinVoiceChannel, entersState, VoiceConnectionStatus } from '@discordjs/voice';
+async execute(interaction) {
+  console.log("Join command used");
 
-export default {
-  data: new SlashCommandBuilder()
-    .setName('join')
-    .setDescription('Join your voice channel'),
+  const channel = interaction.member.voice.channel;
 
-  async execute(interaction) {
-    const channel = interaction.member.voice.channel;
-
-    if (!channel) {
-      return interaction.reply({
-        content: 'You must be in a voice channel first.',
-        ephemeral: true
-      });
-    }
-
-    try {
-      const connection = joinVoiceChannel({
-        channelId: channel.id,
-        guildId: channel.guild.id,
-        adapterCreator: channel.guild.voiceAdapterCreator,
-      });
-
-      await entersState(connection, VoiceConnectionStatus.Ready, 30000);
-
-      await interaction.reply('🎤 Joined your voice channel!');
-    } catch (error) {
-      console.error(error);
-      await interaction.reply({
-        content: 'Failed to join the voice channel.',
-        ephemeral: true
-      });
-    }
+  if (!channel) {
+    console.log("User not in VC");
+    return interaction.reply({
+      content: "Join a voice channel first.",
+      ephemeral: true
+    });
   }
-};
+
+  console.log(`Attempting to join ${channel.name}`);
+
+  try {
+    joinVoiceChannel({
+      channelId: channel.id,
+      guildId: channel.guild.id,
+      adapterCreator: channel.guild.voiceAdapterCreator
+    });
+
+    console.log("Voice connection created");
+
+    await interaction.reply("Joined!");
+  } catch (err) {
+    console.error(err);
+    await interaction.reply("Failed to join.");
+  }
+}
