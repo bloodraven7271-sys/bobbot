@@ -159,7 +159,7 @@ async function awardRoleReward(guild, member, roleId, level) {
 async function sendLevelUpAnnouncement(guild, member, levelData, config) {
   try {
   const levelUpChannel = guild.channels.cache.get('1512889957117853837');
-    
+    console.log('Sending level-up to:', levelUpChannel?.name);
     if (!levelUpChannel || !levelUpChannel.isTextBased()) {
       return;
     }
