@@ -94,7 +94,11 @@ let badges = [];
 
 if (interaction.member.permissions.has('Administrator'))
   badges.push('🛡️ Admin');
+if (interaction.member.permissions.has('ManageGuild'))
+  badges.push('⚙️ Staff');
 
+if (interaction.guild.ownerId === interaction.user.id)
+  badges.push('👑 Server Owner');
 if (interaction.member.premiumSince)
   badges.push('🚀 Booster');
 
