@@ -44,13 +44,15 @@ export default {
     const subcommand = interaction.options.getSubcommand();
 
     if (subcommand === 'set') {
-      const gender = interaction.options.getString('gender');
-      const timezone = interaction.options.getString('timezone');
+     const gender = interaction.options.getString('gender');
+const country = interaction.options.getString('country');
+const timezone = interaction.options.getString('timezone');
 
-      profiles.set(interaction.user.id, {
-        gender,
-        timezone
-      });
+profiles.set(interaction.user.id, {
+  gender,
+  country,
+  timezone
+});
 
       return interaction.reply({
         content: '✅ Profile saved!',
@@ -68,24 +70,68 @@ export default {
         });
       }
 
-      const embed = new EmbedBuilder()
-        .setTitle(`${interaction.user.username}'s Profile`)
-        .addFields(
-          {
-            name: 'Gender',
-            value: profile.gender,
-            inline: true
-          },
-          {
-            name: 'Timezone',
-            value: profile.timezone,
-            inline: true
-          }
-        );
-
-      return interaction.reply({
-        embeds: [embed]
-      });
+     const embed = new EmbedBuilder()
+  .setTitle(`${interaction.user.username}'s Profile`)
+  .setThumbnail(interaction.user.displayAvatarURL())
+  .addFields(
+    {
+      name: 'Gender',
+      value: profile.gender,
+      inline: true
+    },
+    {
+      name: 'Country',
+      value: profile.country,
+      inline: true
+    },
+    {
+      name: 'Timezone',
+      value: profile.timezone,
+      inline: true
+    },
+    {
+      name: 'Account Created',
+      value: `<t:${Math.floor(interaction.user.createdTimestamp / 1000)}:D>`,
+      inline: false
+    },
+    {
+      name: 'Joined Server',
+      value: `<t:${Math.floor(interaction.member.joinedTimestamp / 1000)}:D>`,
+      inline: false
     }
-  }
-};
+  )
+  .setColor('Blue');
+      
+.addStringOption(option =>
+  option
+    .setName('bio')
+    .setDescription('About yourself')
+    .setRequired(false)
+)
+
+.addStringOption(option =>
+  option
+    .setName('favorite_game')
+    .setDescription('Your favorite game')
+    .setRequired(false)
+)
+      const bio = interaction.options.getString('bio') || 'Not set';
+const favoriteGame = interaction.options.getString('favorite_game') || 'Not set';
+
+profiles.set(interaction.user.id, {
+  gender,
+  country,
+  timezone,
+  bio,
+  favoriteGame
+});
+      {
+  name: 'Bio',
+  value: profile.bio,
+  inline: false
+},
+{
+  name: 'Favorite Game',
+  value: profile.favoriteGame,
+  inline: true
+}
