@@ -128,6 +128,11 @@ if (badges.length === 0)
             inline: true
           },
           {
+  name: '🏆 Badges',
+  value: badges.join(', '),
+  inline: false
+},
+          {
             name: '📝 Bio',
             value: profile.bio,
             inline: false
