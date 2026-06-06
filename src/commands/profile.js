@@ -123,6 +123,15 @@ export default {
             value: profile.bio,
             inline: false
           },
+          let badges = [];
+
+if (interaction.member.permissions.has('Administrator')) {
+  badges.push('🛡️ Admin');
+}
+
+if (badges.length === 0) {
+  badges.push('None');
+}
           {
             name: '📅 Account Created',
             value: `<t:${Math.floor(interaction.user.createdTimestamp / 1000)}:D>`,
