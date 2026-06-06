@@ -90,7 +90,16 @@ export default {
           ephemeral: true
         });
       }
+let badges = [];
 
+if (interaction.member.permissions.has('Administrator'))
+  badges.push('🛡️ Admin');
+
+if (interaction.member.premiumSince)
+  badges.push('🚀 Booster');
+
+if (badges.length === 0)
+  badges.push('None');
       const embed = new EmbedBuilder()
         .setColor('Blue')
         .setTitle(`${interaction.user.username}'s Profile`)
@@ -123,15 +132,7 @@ export default {
             value: profile.bio,
             inline: false
           },
-          let badges = [];
-
-if (interaction.member.permissions.has('Administrator')) {
-  badges.push('🛡️ Admin');
-}
-
-if (badges.length === 0) {
-  badges.push('None');
-}
+          
           {
             name: '📅 Account Created',
             value: `<t:${Math.floor(interaction.user.createdTimestamp / 1000)}:D>`,
