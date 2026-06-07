@@ -6,7 +6,8 @@ export default {
     .setName('join')
     .setDescription('Makes the bot join your voice channel'),
 
-  async execute(interaction) {
+ async execute(interaction) {
+  try {
     const channel = interaction.member.voice.channel;
 
     if (!channel) {
@@ -23,5 +24,12 @@ export default {
     });
 
     await interaction.reply('Joined the voice channel!');
-  },
-};
+  } catch (error) {
+    console.error('JOIN ERROR:', error);
+
+    await interaction.reply({
+      content: `Error: ${error.message}`,
+      ephemeral: true
+    });
+  }
+}
