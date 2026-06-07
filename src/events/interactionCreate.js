@@ -32,7 +32,17 @@ export default {
         InteractionHelper.patchInteractionResponses(interaction);
 
         if (interaction.isChatInputCommand()) {
-          try {
+
+  const ALLOWED_CHANNEL = '1512251623324516382';
+
+  if (interaction.channelId !== ALLOWED_CHANNEL) {
+    return interaction.reply({
+      content: '❌ Commands can only be used in the bot channel.',
+      ephemeral: true
+    });
+  }
+
+  try {
             logger.info(`Command executed: /${interaction.commandName} by ${interaction.user.tag}`, {
               event: 'interaction.command.received',
               traceId: interactionTraceContext.traceId,
